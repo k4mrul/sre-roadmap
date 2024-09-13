@@ -3,43 +3,162 @@
 An opinionated roadmap to become an SRE (Concepts > Tools)
 
 
-## Distributed systems
+### Fallacies of Distributed Computing
 
-* _Concepts_
-  * Fallacies of distributed computing
-  * Synchronous vs. asynchronous
-  * Event log vs. message queue
-  * Exactly-once delivery
-  * Different types of message failure
-  * Orchestration vs. choreography
-  * Causality
-  * CDN
-  * _Hashing_
-    * Consistent hashing
-    * Geohashing
-    * Perfect hashing
-  * Read-heavy vs. write-heavy impacts
-  * Federation
-  * _Latency_
-    * Latency, throughput, goodput
-    * Latency numbers every programmer should know
-    * How to prevent latency variability
-    * Tail latency
-  * How to reduce sharing
-  * Idempotency
-  * _Load balancer_
-    * Concepts
-    * Layer 4 vs. layer 7 load balancer
-  * Liveness vs. safety properties
-  * Microservices: pros and cons
-  * REST
-  * gRPC
-  * Service mesh
-  * Source of truth
-  * Stateful vs. stateless
-  * Total vs. partial order
-  * Why can't we rely on the system clock in distributed systems
-  * Vector clock
+-   **Network is reliable:** Networks can experience failures like packet loss, delays, and disconnections.
+-   **Latency is zero:** There's always a delay in communication between nodes in a distributed system.
+-   **Bandwidth is infinite:** Bandwidth is limited, and excessive data can overwhelm networks.
+-   **The network is secure:** Networks are vulnerable to attacks like hacking and data breaches.
+-   **Topology is static:** Network topology can change dynamically due to failures or reconfigurations.
+
+### Synchronous vs. Asynchronous
+
+-   **Synchronous:** Communication requires a response before proceeding (e.g., RPC).
+-   **Asynchronous:** Communication doesn't require an immediate response (e.g., messaging).
+
+### Event Log vs. Message Queue
+
+-   **Event Log:** Stores a sequence of events for auditing and replay.
+-   **Message Queue:** Temporarily stores messages for later processing.
+
+### Exactly-once Delivery
+
+Ensures that a message is delivered exactly once, even in the face of failures.
+
+### Different Types of Message Failure
+
+-   **Loss:** Message is not received.
+-   **Duplication:** Message is received multiple times.
+-   **Out-of-order:** Messages are received in a different order than sent.
+
+### Orchestration vs. Choreography
+
+-   **Orchestration:** A central entity controls the flow of a distributed process.
+-   **Choreography:** Services communicate directly and autonomously.
+
+### Causality
+
+Ensures that events in a distributed system happen in a consistent order.
+
+### CDN (Content Delivery Network)
+
+Distributes content across multiple servers to improve performance and availability.
+
+### Hashing
+
+Maps large data sets to smaller ones for efficient storage and retrieval.
+
+### Consistent Hashing
+
+Ensures that only a small number of keys are affected when a node is added or removed.
+
+### Geohashing
+
+Maps geographic coordinates to a fixed-length string for efficient indexing and querying.
+
+### Perfect Hashing
+
+A hashing technique that guarantees no collisions.
+
+### Read-heavy vs. Write-heavy Impacts
+
+-   **Read-heavy:** Optimized for frequent reads, often using caching.
+-   **Write-heavy:** Optimized for frequent writes, often using replication and batching.
+
+### Federation
+
+A system where multiple autonomous entities collaborate.
+
+### Latency
+
+The time it takes for a request to be processed and a response to be received.
+
+### Latency, Throughput, Goodput
+
+-   **Latency:** The time it takes to complete a task.
+-   **Throughput:** The rate at which tasks are completed.
+-   **Goodput:** The useful data transferred per unit time.
+
+### Latency Numbers Every Programmer Should Know
+
+-   **Network latency:** Typically around 1-10 milliseconds.
+-   **Disk access latency:** Typically around 10-20 milliseconds.
+-   **Database query latency:** Varies widely depending on complexity.
+
+### How to Prevent Latency Variability
+
+-   **Caching:** Store frequently accessed data in memory.
+-   **Batching:** Group multiple operations together to reduce overhead.
+-   **Asynchronous processing:** Defer non-critical tasks to improve responsiveness.
+
+### Tail Latency
+
+The latency of the slowest requests in a distribution.
+
+### How to Reduce Sharing
+
+-   **Vertical scaling:** Increase resources for individual components.
+-   **Horizontal scaling:** Distribute load across multiple instances.
+-   **Partitioning:** Divide data into smaller, more manageable chunks.
+
+### Idempotency
+
+An operation that can be performed multiple times without changing the result.
+
+### Load Balancer
+
+Distributes traffic across multiple servers to improve performance and availability.
+
+### Layer 4 vs. Layer 7 Load Balancer
+
+-   **Layer 4:** Balances traffic based on IP address and port.
+-   **Layer 7:** Balances traffic based on application-level information.
+
+### Liveness vs. Safety Properties
+
+-   **Liveness:** Guarantees that something good will eventually happen (e.g., a message will be delivered).
+-   **Safety:** Guarantees that nothing bad will happen (e.g., a message will not be delivered multiple times).
+
+### Microservices: Pros and Cons
+
+-   **Pros:** Scalability, flexibility, independent development.
+-   **Cons:** Complexity, increased overhead, coordination challenges.
+
+### REST (Representational State Transfer)
+
+An architectural style for building distributed systems using HTTP.
+
+### gRPC (Google Remote Procedure Call)
+
+A high-performance RPC framework that uses HTTP/2.
+
+### Service Mesh
+
+A dedicated infrastructure layer for managing service-to-service communication.
+
+### Source of Truth
+
+The authoritative data store for a particular piece of information.
+
+### Stateful vs. Stateless
+
+-   **Stateful:** Retains information about previous interactions.
+-   **Stateless:** Does not retain information about previous interactions.
+
+### Total vs. Partial Order
+
+-   **Total order:** All elements can be compared.
+-   **Partial order:** Some elements may not be comparable.
+
+### Why Can't We Rely on the System Clock in Distributed Systems
+
+-   **Clock skew:** Clocks on different machines may be out of sync.
+-   **Clock drift:** Clocks may gradually become inaccurate over time.
+
+### Vector Clock
+
+A technique for determining the causal relationship between events in a distributed system.
+
 * _Cache_
   * When to use a cache
   * Cache-aside vs. read-through
