@@ -5,6 +5,8 @@ An opinionated roadmap to become an SRE (Concepts > Tools)
 
 ### Fallacies of Distributed Computing
 
+These are common misconceptions about distributed systems that can lead to design and implementation errors.
+
 -   **Network is reliable:** Networks can experience failures like packet loss, delays, and disconnections.
 -   **Latency is zero:** There's always a delay in communication between nodes in a distributed system.
 -   **Bandwidth is infinite:** Bandwidth is limited, and excessive data can overwhelm networks.
@@ -13,17 +15,17 @@ An opinionated roadmap to become an SRE (Concepts > Tools)
 
 ### Synchronous vs. Asynchronous
 
--   **Synchronous:** Communication requires a response before proceeding (e.g., RPC).
--   **Asynchronous:** Communication doesn't require an immediate response (e.g., messaging).
+-   **Synchronous:** Communication requires a response before proceeding (e.g., RPC). This can be blocking and might lead to performance issues if the response is slow.
+-   **Asynchronous:** Communication doesn't require an immediate response (e.g., messaging). This is often used for non-critical tasks or when the response time is uncertain.
 
 ### Event Log vs. Message Queue
 
--   **Event Log:** Stores a sequence of events for auditing and replay.
--   **Message Queue:** Temporarily stores messages for later processing.
+-   **Event Log:** Stores a sequence of events for auditing and replay. This is useful for tracking the history of a system and for debugging or troubleshooting issues.
+-   **Message Queue:** Temporarily stores messages for later processing. This is used for decoupling components, handling peak loads, and implementing asynchronous workflows.
 
 ### Exactly-once Delivery
 
-Ensures that a message is delivered exactly once, even in the face of failures.
+Ensures that a message is delivered exactly once, even in the face of failures. This is important for ensuring data consistency and preventing duplicate processing.
 
 ### Different Types of Message Failure
 
@@ -33,32 +35,32 @@ Ensures that a message is delivered exactly once, even in the face of failures.
 
 ### Orchestration vs. Choreography
 
--   **Orchestration:** A central entity controls the flow of a distributed process.
--   **Choreography:** Services communicate directly and autonomously.
+-   **Orchestration:** A central entity controls the flow of a distributed process. This can be more complex to manage but provides better control.
+-   **Choreography:** Services communicate directly and autonomously. This is often used for loosely coupled systems and can be more scalable but can be harder to reason about.
 
 ### Causality
 
-Ensures that events in a distributed system happen in a consistent order.
+Ensures that events in a distributed system happen in a consistent order. This is important for ensuring data consistency and preventing anomalies.
 
 ### CDN (Content Delivery Network)
 
-Distributes content across multiple servers to improve performance and availability.
+Distributes content across multiple servers to improve performance and availability. This is often used for static content like images, CSS, and JavaScript.
 
 ### Hashing
 
-Maps large data sets to smaller ones for efficient storage and retrieval.
+Maps large data sets to smaller ones for efficient storage and retrieval. This is used for indexing data, caching, and load balancing.
 
 ### Consistent Hashing
 
-Ensures that only a small number of keys are affected when a node is added or removed.
+Ensures that only a small number of keys are affected when a node is added or removed. This is used for distributed caching and data partitioning.
 
 ### Geohashing
 
-Maps geographic coordinates to a fixed-length string for efficient indexing and querying.
+Maps geographic coordinates to a fixed-length string for efficient indexing and querying. This is used for location-based services and spatial data.
 
 ### Perfect Hashing
 
-A hashing technique that guarantees no collisions.
+A hashing technique that guarantees no collisions. This is used for scenarios where collisions are unacceptable, such as in compilers and database indexes.
 
 ### Read-heavy vs. Write-heavy Impacts
 
@@ -67,7 +69,7 @@ A hashing technique that guarantees no collisions.
 
 ### Federation
 
-A system where multiple autonomous entities collaborate.
+A system where multiple autonomous entities collaborate. This is used for large-scale systems like federated learning and blockchain networks.
 
 ### Latency
 
@@ -93,7 +95,7 @@ The time it takes for a request to be processed and a response to be received.
 
 ### Tail Latency
 
-The latency of the slowest requests in a distribution.
+The latency of the slowest requests in a distribution. This is often used to measure the performance of a system under load.
 
 ### How to Reduce Sharing
 
@@ -103,7 +105,7 @@ The latency of the slowest requests in a distribution.
 
 ### Idempotency
 
-An operation that can be performed multiple times without changing the result.
+An operation that can be performed multiple times without changing the result. This is important for fault tolerance and retry mechanisms.
 
 ### Load Balancer
 
