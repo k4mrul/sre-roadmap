@@ -161,69 +161,170 @@ The authoritative data store for a particular piece of information.
 
 A technique for determining the causal relationship between events in a distributed system.
 
-* _Cache_
-  * When to use a cache
-  * Cache-aside vs. read-through
-  * Eviction policy
-  * Refresh-ahead
-  * Write-through vs. write-back
-  * Distributed cache
-  * Performance cache vs. capacity cache
-* _Databases_
-  * _Different types of databases_
-    * NoSQL vs. SQL databases
-    * Relational vs. document
-    * Column-oriented databases
-    * Graph databases
-    * Vector database
-    * Objects-based storage
-  * ACID
-  * _Partitioning_
-    * Criteria
-    * Methods
-    * Replication vs. partition
-  * Hotspot
-  * CALM theorem
-  * CAP theorem
-  * PACELC theorem
-  * Cardinality
-  * Chain replication
-  * Consensus
-  * Concurrency control
-  * Consistency models
-  * Isolation levels
-  * Serializability
-  * Linearizability
-  * CRDT
-  * _Indexes_
-    * Tradeoff
-    * Primary vs. secondary indexes
-  * Denormalization
-  * View & materialized view
-  * Transaction
-  * Distributed transactions downsides
-  * Strategies to handle rebalancing
-  * Leader election
-  * MVCC
-  * N+1 select problem
-  * Quorum
-  * Raft
-  * Read repair
-  * Single-leader, multi-leader, leaderless replication
-  * Split-brain
-  * 2PC
-  * 3PC
-  * WAL
-  * Write and read amplification
-* _Data structure_
-  * _Probabilistic data structures_
-    * Bloom filter
-    * Count-min sketch
-    * HyperLogLog
-  * _Storage_
-    * LSM tree
-    * B-tree
-    * SSTable
+### **Cache**
+
+A cache is a temporary storage layer that keeps frequently accessed data closer to the user or application for faster retrieval.
+
+-   **When to use a cache**: Use a cache when you need to speed up data access by reducing the time it takes to retrieve frequently requested data from a slower data store (like a database or external service).
+
+-   **Cache-aside vs. read-through**:
+
+    -   **Cache-aside**: The application is responsible for loading data into the cache and reading from it when necessary. If the cache misses (data not found), the app fetches it from the primary data store and then caches it.
+    -   **Read-through**: The cache automatically loads data from the underlying data store when the data is missing, abstracting the fetching logic away from the application.
+-   **Eviction policy**: Determines which data is removed from the cache when the cache is full. Common policies include Least Recently Used (LRU), First In First Out (FIFO), and Least Frequently Used (LFU).
+
+-   **Refresh-ahead**: Preloads the cache with data that is expected to be requested soon, ensuring that it is ready when needed.
+
+-   **Write-through vs. write-back**:
+
+    -   **Write-through**: Data is written to both the cache and the main storage simultaneously.
+    -   **Write-back**: Data is written only to the cache first, then written to the main storage later (potentially causing data loss in the case of failure).
+-   **Distributed cache**: A cache spread across multiple servers to provide high availability and scalability, often used in large-scale applications.
+
+-   **Performance cache vs. capacity cache**:
+
+    -   **Performance cache**: Focuses on improving response times by caching frequently accessed data.
+    -   **Capacity cache**: Focuses on reducing the load on the main storage by storing larger volumes of data temporarily.
+
+* * * * *
+
+### **Databases**
+
+-   **Different types of databases**:
+
+    -   **Relational databases** (SQL) store structured data in tables with predefined schemas (e.g., MySQL, PostgreSQL).
+    -   **NoSQL databases** store unstructured, schema-less data in various formats (e.g., MongoDB for documents, Cassandra for wide-column stores).
+-   **NoSQL vs. SQL databases**:
+
+    -   **SQL** databases are table-based and support structured query languages.
+    -   **NoSQL** databases offer flexibility in how data is stored (documents, key-value pairs, columns, graphs) and are better suited for large-scale, distributed, or rapidly changing datasets.
+-   **Relational vs. document**:
+
+    -   **Relational**: Data is stored in tables with rows and columns; highly structured (e.g., PostgreSQL).
+    -   **Document**: Data is stored as semi-structured documents (JSON, BSON), offering flexibility for complex data types (e.g., MongoDB).
+-   **Column-oriented databases**: Store data in columns rather than rows, optimizing read performance for analytical queries (e.g., Apache Cassandra, HBase).
+
+-   **Graph databases**: Designed to store relationships between entities. Nodes represent entities, and edges represent relationships (e.g., Neo4j).
+
+-   **Vector database**: Specialized for handling vector embeddings and performing efficient similarity searches (often used in AI applications).
+
+-   **Object-based storage**: Stores data as objects with metadata, often used in cloud storage solutions (e.g., Amazon S3).
+
+-   **ACID**: A set of properties that ensure reliable database transactions: **Atomicity, Consistency, Isolation, Durability**.
+
+* * * * *
+
+### **Partitioning**
+
+-   **Partitioning criteria**: Strategies for splitting data across multiple partitions, such as by range, hash, or list, to improve scalability and performance.
+
+-   **Partitioning methods**: Includes horizontal partitioning (sharding), vertical partitioning (splitting by columns), and composite partitioning (combining multiple strategies).
+
+-   **Replication vs. partition**:
+
+    -   **Replication**: Making copies of the same data across multiple nodes for fault tolerance.
+    -   **Partitioning**: Dividing data into smaller pieces to distribute across nodes.
+-   **Hotspot**: A situation where one partition receives more traffic than others, causing performance bottlenecks.
+
+* * * * *
+
+### **Theorems & Consistency Models**
+
+-   **CALM theorem**: Consistency and Logical Monotonicity---if a system is monotonic, it can ensure consistency without coordination.
+
+-   **CAP theorem**: In a distributed system, you can only have two of the following: **Consistency**, **Availability**, and **Partition tolerance**.
+
+-   **PACELC theorem**: An extension of CAP that adds latency into the equation: "If there is a partition (P), a system must choose between availability (A) and consistency (C), but else (E), it must choose between latency (L) and consistency (C)."
+
+-   **Cardinality**: The uniqueness of data values in a column. Higher cardinality means more unique values.
+
+-   **Chain replication**: A technique where replicas form a chain, and updates propagate sequentially from one replica to the next.
+
+* * * * *
+
+### **Consensus & Concurrency**
+
+-   **Consensus**: A protocol that ensures distributed systems agree on a single value or state (e.g., Paxos, Raft).
+
+-   **Concurrency control**: Mechanisms that handle multiple transactions happening simultaneously to avoid conflicts (e.g., locks, timestamps).
+
+-   **Consistency models**: Models that describe the rules and guarantees for reading and writing data in a distributed system (e.g., eventual consistency, strong consistency).
+
+-   **Isolation levels**: Define the extent to which the operations of one transaction are isolated from others (e.g., read uncommitted, serializable).
+
+-   **Serializability**: The strongest isolation level, ensuring that transactions occur as if they were executed serially.
+
+-   **Linearizability**: A stronger form of consistency than serializability, ensuring that reads reflect the most recent writes across all nodes.
+
+* * * * *
+
+### **Data Structures & Indexes**
+
+-   **CRDT**: Conflict-free Replicated Data Types allow distributed systems to converge to the same state without coordination.
+
+-   **Indexes**: Data structures that improve query performance by allowing faster lookups. They come with trade-offs in terms of write performance and storage cost.
+
+    -   **Primary vs. secondary indexes**: Primary indexes are based on the primary key, while secondary indexes can be created on other columns to optimize query performance.
+-   **Denormalization**: Storing redundant data to improve read performance, at the cost of potential data inconsistency.
+
+-   **View & materialized view**:
+
+    -   **View**: A virtual table created from a query.
+    -   **Materialized view**: A view whose data is stored and updated, offering faster reads at the cost of more complex writes.
+
+* * * * *
+
+### **Transactions**
+
+-   **Distributed transactions downsides**: Complexity and performance issues due to the need for coordination between multiple systems.
+
+-   **Strategies to handle rebalancing**: Techniques like consistent hashing, data movement minimization, and partition rebalancing are used to avoid disruptions during rebalancing in distributed systems.
+
+-   **Leader election**: A process in distributed systems for selecting a leader node to manage coordination (e.g., Raft, Paxos).
+
+-   **MVCC**: Multi-Version Concurrency Control allows multiple versions of data to be stored, improving read performance without locking.
+
+-   **N+1 select problem**: A performance problem where one query leads to multiple additional queries, causing inefficiency.
+
+* * * * *
+
+### **Quorum & Replication**
+
+-   **Quorum**: The minimum number of nodes that must agree for an operation (read/write) to succeed in a distributed system.
+
+-   **Raft**: A consensus algorithm for managing replicated state machines, designed to be simpler than Paxos.
+
+-   **Read repair**: Fixes inconsistencies between replicas by synchronizing the data when reads are made.
+
+-   **Single-leader, multi-leader, leaderless replication**:
+
+    -   **Single-leader**: One node is responsible for all writes.
+    -   **Multi-leader**: Multiple nodes can handle writes, but conflicts can occur.
+    -   **Leaderless**: Any node can handle writes, often leading to eventual consistency.
+-   **Split-brain**: A situation where a network partition causes multiple nodes to think they are the leader, leading to inconsistency.
+
+-   **2PC**: Two-Phase Commit protocol ensures atomic commits across multiple systems but can cause delays if any node is slow.
+
+-   **3PC**: Three-Phase Commit extends 2PC by adding a pre-commit phase to reduce blocking, but is still vulnerable to certain failures.
+
+* * * * *
+
+### **Storage & Data Structures**
+
+-   **WAL**: Write-Ahead Logging ensures data durability by logging changes before they are applied to the database.
+
+-   **Write and read amplification**: Refers to the increased number of write or read operations compared to the original operation, often in storage systems like SSDs or databases.
+
+-   **Probabilistic data structures**: Efficiently approximate answers to queries while using less memory. Common examples:
+
+    -   **Bloom filter**: Used to test whether an element is in a set, with a possibility of false positives.
+    -   **Count-min sketch**: Estimates the frequency of elements in a data stream, with some inaccuracies.
+    -   **HyperLogLog**: Estimates the number of distinct elements in a dataset (cardinality).
+-   **LSM tree**: Log-Structured Merge Tree is a data structure optimized for write-heavy workloads, often used in databases like Cassandra.
+
+-   **B-tree**: A balanced tree data structure used in databases and file systems for efficient reads and writes.
+
+-   **SSTable**: Sorted String Table is a file format used for storing key-value pairs in a sorted order, used by databases like Cassandra
       
 ## Reliability
 
