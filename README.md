@@ -3,188 +3,140 @@
 An opinionated roadmap to become an SRE (Concepts > Tools)
 
 
-### Fallacies of Distributed Computing
+### **Distributed Computing Concepts**
 
-These are common misconceptions about distributed systems that can lead to design and implementation errors.
+1. **Fallacies of distributed computing**: These are common misconceptions, like:
+   - The network is reliable.
+   - Latency is zero.
+   - Bandwidth is infinite.
+   - The network is secure, etc.
 
--   **Network is reliable:** Networks can experience failures like packet loss, delays, and disconnections.
--   **Latency is zero:** There's always a delay in communication between nodes in a distributed system.
--   **Bandwidth is infinite:** Bandwidth is limited, and excessive data can overwhelm networks.
--   **The network is secure:** Networks are vulnerable to attacks like hacking and data breaches.
--   **Topology is static:** Network topology can change dynamically due to failures or reconfigurations.
+2. **Synchronous vs. Asynchronous**:
+   - **Synchronous**: Operations happen one after the other, and each step waits for the previous one to finish.
+   - **Asynchronous**: Steps can happen independently; one doesn’t need to wait for the other to finish.
 
-### Synchronous vs. Asynchronous
+3. **Event log vs. Message queue**:
+   - **Event log**: Keeps a permanent record of events in order.
+   - **Message queue**: Sends messages between systems, and messages are typically processed and then removed.
 
--   **Synchronous:** Communication requires a response before proceeding (e.g., RPC). This can be blocking and might lead to performance issues if the response is slow.
--   **Asynchronous:** Communication doesn't require an immediate response (e.g., messaging). This is often used for non-critical tasks or when the response time is uncertain.
+4. **Exactly-once delivery**: A guarantee that a message or action will only be processed one time, no more, no less.
 
-### Event Log vs. Message Queue
+5. **Different types of message failure**:
+   - **Message loss**: A message gets lost in transit.
+   - **Duplicate message**: The same message is received more than once.
+   - **Out-of-order delivery**: Messages arrive in a different order than they were sent.
 
--   **Event Log:** Stores a sequence of events for auditing and replay. This is useful for tracking the history of a system and for debugging or troubleshooting issues.
--   **Message Queue:** Temporarily stores messages for later processing. This is used for decoupling components, handling peak loads, and implementing asynchronous workflows.
+6. **Orchestration vs. Choreography**:
+   - **Orchestration**: A central system controls the interactions between services.
+   - **Choreography**: Services interact with each other without a central controller, each knowing what to do.
 
-### Exactly-once Delivery
+7. **Causality**: Understanding how one event causes another, especially in distributed systems, where things don’t always happen in sequence.
 
-Ensures that a message is delivered exactly once, even in the face of failures. This is important for ensuring data consistency and preventing duplicate processing.
+8. **CDN (Content Delivery Network)**: A system of servers spread across the world to deliver content faster to users based on their location.
 
-### Different Types of Message Failure
+9. **Hashing**: A way to convert data into a fixed-size string of characters, usually for fast lookups.
 
--   **Loss:** Message is not received.
--   **Duplication:** Message is received multiple times.
--   **Out-of-order:** Messages are received in a different order than sent.
+10. **Consistent hashing**: A technique used to evenly distribute data across servers in a way that minimizes data movement when servers are added or removed.
 
-### Orchestration vs. Choreography
+11. **Geohashing**: A method to encode geographic locations (like coordinates) into short strings for easy comparison and searching.
 
--   **Orchestration:** A central entity controls the flow of a distributed process. This can be more complex to manage but provides better control.
--   **Choreography:** Services communicate directly and autonomously. This is often used for loosely coupled systems and can be more scalable but can be harder to reason about.
+12. **Perfect hashing**: A way of hashing where no two different inputs map to the same output (no collisions).
 
-### Causality
+13. **Read-heavy vs. write-heavy impacts**:
+    - **Read-heavy**: More reading (retrieving) data than writing (changing) it.
+    - **Write-heavy**: More writing (changing data) than reading it. Each affects how you design and optimize a system.
 
-Ensures that events in a distributed system happen in a consistent order. This is important for ensuring data consistency and preventing anomalies.
+14. **Federation**: A system design where multiple independent systems work together but remain autonomous.
 
-### CDN (Content Delivery Network)
+15. **Latency**: The time delay between a request and the system’s response.
 
-Distributes content across multiple servers to improve performance and availability. This is often used for static content like images, CSS, and JavaScript.
+16. **Latency, throughput, goodput**:
+    - **Latency**: The delay in getting a response.
+    - **Throughput**: The amount of data processed in a given time.
+    - **Goodput**: The amount of useful data that is processed, excluding things like retries or overhead.
 
-### Hashing
+17. **Latency numbers every programmer should know**: Common benchmarks for how long certain operations take, like reading from RAM vs. disk or across a network.
 
-Maps large data sets to smaller ones for efficient storage and retrieval. This is used for indexing data, caching, and load balancing.
+18. **How to prevent latency variability**: Use techniques like load balancing, caching, and avoiding overloaded systems to reduce unpredictable delays.
 
-### Consistent Hashing
+19. **Tail latency**: The slowest response time experienced by a small percentage of users, usually due to outliers.
 
-Ensures that only a small number of keys are affected when a node is added or removed. This is used for distributed caching and data partitioning.
+20. **How to reduce sharing**: Minimize the number of resources (like memory, files) shared between processes to avoid delays from waiting for access.
 
-### Geohashing
+21. **Idempotency**: The ability to perform the same operation multiple times without changing the result beyond the first attempt.
 
-Maps geographic coordinates to a fixed-length string for efficient indexing and querying. This is used for location-based services and spatial data.
+22. **Load balancer**: A system that distributes traffic across multiple servers to prevent any one server from being overwhelmed.
 
-### Perfect Hashing
+---
 
-A hashing technique that guarantees no collisions. This is used for scenarios where collisions are unacceptable, such as in compilers and database indexes.
+### **Load Balancer Concepts**
 
-### Read-heavy vs. Write-heavy Impacts
+1. **Layer 4 vs. Layer 7 load balancer**:
+   - **Layer 4**: Distributes traffic based on network information like IP addresses and ports (lower level).
+   - **Layer 7**: Distributes traffic based on application-level information like HTTP requests (higher level).
 
--   **Read-heavy:** Optimized for frequent reads, often using caching.
--   **Write-heavy:** Optimized for frequent writes, often using replication and batching.
+2. **Liveness vs. Safety properties**:
+   - **Liveness**: Guarantees that something good eventually happens (e.g., the system will eventually respond).
+   - **Safety**: Guarantees that something bad will not happen (e.g., the system won’t crash).
 
-### Federation
+---
 
-A system where multiple autonomous entities collaborate. This is used for large-scale systems like federated learning and blockchain networks.
+### **Microservices Concepts**
 
-### Latency
+1. **Microservices pros**: Flexibility, scalability, independent deployment.
+2. **Microservices cons**: Complexity, harder to manage and debug, need for effective communication between services.
 
-The time it takes for a request to be processed and a response to be received.
+3. **REST**: A way for services to communicate over HTTP, using standard methods like GET, POST, and DELETE.
 
-### Latency, Throughput, Goodput
+4. **gRPC**: A faster, more efficient alternative to REST that uses binary data instead of text for communication between services.
 
--   **Latency:** The time it takes to complete a task.
--   **Throughput:** The rate at which tasks are completed.
--   **Goodput:** The useful data transferred per unit time.
+5. **Service mesh**: A network layer that helps manage communication, security, and monitoring between microservices.
 
-### Latency Numbers Every Programmer Should Know
+---
 
--   **Network latency:** Typically around 1-10 milliseconds.
--   **Disk access latency:** Typically around 10-20 milliseconds.
--   **Database query latency:** Varies widely depending on complexity.
+### **State and Time Concepts**
 
-### How to Prevent Latency Variability
+1. **Source of truth**: The authoritative source of data that other systems can rely on to be correct.
 
--   **Caching:** Store frequently accessed data in memory.
--   **Batching:** Group multiple operations together to reduce overhead.
--   **Asynchronous processing:** Defer non-critical tasks to improve responsiveness.
+2. **Stateful vs. Stateless**:
+   - **Stateful**: Keeps track of information (state) across requests.
+   - **Stateless**: Does not keep track of past requests; every interaction is independent.
 
-### Tail Latency
+3. **Total vs. Partial order**:
+   - **Total order**: All events are arranged in one single sequence.
+   - **Partial order**: Only some events are arranged in sequence, not all.
 
-The latency of the slowest requests in a distribution. This is often used to measure the performance of a system under load.
+4. **Why can’t we rely on the system clock in distributed systems**: Clocks can drift, and different machines may have slightly different times, which can lead to inconsistencies.
 
-### How to Reduce Sharing
+5. **Vector clock**: A way of tracking the order of events across multiple systems to maintain consistency.
 
--   **Vertical scaling:** Increase resources for individual components.
--   **Horizontal scaling:** Distribute load across multiple instances.
--   **Partitioning:** Divide data into smaller, more manageable chunks.
+---
 
-### Idempotency
+### **Cache Concepts**
 
-An operation that can be performed multiple times without changing the result. This is important for fault tolerance and retry mechanisms.
+1. **Cache**: A way to store data temporarily so it can be accessed more quickly.
 
-### Load Balancer
+2. **When to use a cache**: When you need to access data frequently and want to reduce the time and resources needed to retrieve it from the main source.
 
-Distributes traffic across multiple servers to improve performance and availability.
+3. **Cache-aside vs. Read-through**:
+   - **Cache-aside**: The application checks the cache first, and if the data isn’t there, it fetches it from the main source and stores it in the cache.
+   - **Read-through**: The cache is responsible for fetching and storing the data from the main source when needed.
 
-### Layer 4 vs. Layer 7 Load Balancer
+4. **Eviction policy**: Rules for deciding which data to remove from the cache when it’s full. Examples: LRU (Least Recently Used), LFU (Least Frequently Used).
 
--   **Layer 4:** Balances traffic based on IP address and port.
--   **Layer 7:** Balances traffic based on application-level information.
+5. **Refresh-ahead**: A strategy where the cache preemptively updates data before it expires so users always get fresh data.
 
-### Liveness vs. Safety Properties
+6. **Write-through vs. Write-back**:
+   - **Write-through**: Data is written to the cache and the main source at the same time.
+   - **Write-back**: Data is written to the cache first and only written to the main source later, usually when the cache is full.
 
--   **Liveness:** Guarantees that something good will eventually happen (e.g., a message will be delivered).
--   **Safety:** Guarantees that nothing bad will happen (e.g., a message will not be delivered multiple times).
+7. **Distributed cache**: A cache spread across multiple machines to handle larger datasets and higher traffic.
 
-### Microservices: Pros and Cons
+8. **Performance cache vs. Capacity cache**:
+   - **Performance cache**: Used to reduce response time by storing frequently accessed data.
+   - **Capacity cache**: Used to store large amounts of data to offload the main system.
 
--   **Pros:** Scalability, flexibility, independent development.
--   **Cons:** Complexity, increased overhead, coordination challenges.
 
-### REST (Representational State Transfer)
-
-An architectural style for building distributed systems using HTTP.
-
-### gRPC (Google Remote Procedure Call)
-
-A high-performance RPC framework that uses HTTP/2.
-
-### Service Mesh
-
-A dedicated infrastructure layer for managing service-to-service communication.
-
-### Source of Truth
-
-The authoritative data store for a particular piece of information.
-
-### Stateful vs. Stateless
-
--   **Stateful:** Retains information about previous interactions.
--   **Stateless:** Does not retain information about previous interactions.
-
-### Total vs. Partial Order
-
--   **Total order:** All elements can be compared.
--   **Partial order:** Some elements may not be comparable.
-
-### Why Can't We Rely on the System Clock in Distributed Systems
-
--   **Clock skew:** Clocks on different machines may be out of sync.
--   **Clock drift:** Clocks may gradually become inaccurate over time.
-
-### Vector Clock
-
-A technique for determining the causal relationship between events in a distributed system.
-
-### **Cache**
-
-A cache is a temporary storage layer that keeps frequently accessed data closer to the user or application for faster retrieval.
-
--   **When to use a cache**: Use a cache when you need to speed up data access by reducing the time it takes to retrieve frequently requested data from a slower data store (like a database or external service).
-
--   **Cache-aside vs. read-through**:
-
-    -   **Cache-aside**: The application is responsible for loading data into the cache and reading from it when necessary. If the cache misses (data not found), the app fetches it from the primary data store and then caches it.
-    -   **Read-through**: The cache automatically loads data from the underlying data store when the data is missing, abstracting the fetching logic away from the application.
--   **Eviction policy**: Determines which data is removed from the cache when the cache is full. Common policies include Least Recently Used (LRU), First In First Out (FIFO), and Least Frequently Used (LFU).
-
--   **Refresh-ahead**: Preloads the cache with data that is expected to be requested soon, ensuring that it is ready when needed.
-
--   **Write-through vs. write-back**:
-
-    -   **Write-through**: Data is written to both the cache and the main storage simultaneously.
-    -   **Write-back**: Data is written only to the cache first, then written to the main storage later (potentially causing data loss in the case of failure).
--   **Distributed cache**: A cache spread across multiple servers to provide high availability and scalability, often used in large-scale applications.
-
--   **Performance cache vs. capacity cache**:
-
-    -   **Performance cache**: Focuses on improving response times by caching frequently accessed data.
-    -   **Capacity cache**: Focuses on reducing the load on the main storage by storing larger volumes of data temporarily.
 
 * * * * *
 
