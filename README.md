@@ -326,35 +326,85 @@ A cache is a temporary storage layer that keeps frequently accessed data closer 
 
 -   **SSTable**: Sorted String Table is a file format used for storing key-value pairs in a sorted order, used by databases like Cassandra
       
-## Reliability
+Here's a breakdown of these concepts in simple terms:
 
-* _Concepts_
-  * Difference between availability, resiliency, robustness, fault-tolerance, and reliability
-  * Why is it wrong to target 100% availability
-  * Blast radius
-  * Failure domain
-  * Cascading failures
-  * Hard vs. soft dependencies
-  * _Scalability_
-    * Concepts
-    * Knee point
-    * Ceiling
-  * Number one source of outages
-  * Tail tolerance
-  * Toil
-* _Patterns/Anti-patterns_
-  * Bulkhead pattern
-  * Circuit breaker
-  * Exponential backoff
-  * Jitter
-  * Graceful degradation
-  * Load shedding
-  * Retry amplification
-  * Backpressure
-  * Rate limiting
-  * Request hedging
-* _Practices_
-  * Chaos engineering 
+### **Reliability Concepts**
+
+1\. **Availability**: This is the percentage of time a system is working and accessible. For example, if a website is available 99.9% of the time, it means it's only down 0.1% of the time.
+
+2\. **Resiliency**: This means a system's ability to recover from failures. Even if something goes wrong, the system should bounce back quickly and work as expected.
+
+3\. **Robustness**: This refers to how strong a system is against problems. A robust system can handle unexpected events or conditions without breaking down.
+
+4\. **Fault-tolerance**: This is a system's ability to keep working even when parts of it fail. Imagine a car that still runs if one tire gets a puncture.
+
+5\. **Reliability**: This is about how consistently a system performs without failures over time. A reliable system is one you can depend on to work smoothly.
+
+### **Why is it wrong to target 100% availability?**
+
+- Trying to achieve **100% availability** is very hard and expensive. It would require perfect hardware, software, and operations, which is unrealistic. Instead, most systems aim for a balance like 99.9% or 99.99% availability because aiming for perfection is impractical and often not worth the cost.
+
+### **Blast radius**
+
+- This term describes the extent of damage a failure can cause. A small blast radius means only a small part of the system is affected when something goes wrong.
+
+### **Failure domain**
+
+- This is a section of a system that can fail independently of others. By dividing a system into smaller failure domains, you can prevent one failure from bringing everything down.
+
+### **Cascading failures**
+
+- This is when one failure triggers another, which then causes more failures. It's like a row of dominoes falling---if one piece breaks, it can bring down the whole system.
+
+### **Hard vs. soft dependencies**
+
+- **Hard dependencies**: These are components the system must have to work. If they fail, the whole system fails.
+
+- **Soft dependencies**: These are not critical. If they fail, the system can still function, though maybe not as well.
+
+---
+
+### **Scalability Concepts**
+
+1\. **Knee point**: This is the point where adding more resources (like servers) results in decreasing returns. You're still getting better performance, but each added resource does less.
+
+2\. **Ceiling**: This is the limit of scalability. Beyond this point, adding more resources doesn't help because the system can't handle any more growth.
+
+3\. **Number one source of outages**: The most common cause of outages in systems is often human error---like misconfigurations, poor updates, or accidents.
+
+4\. **Tail tolerance**: This refers to the ability to handle outlier scenarios, or the "long tail" of rare, extreme events that can cause system failures.
+
+5\. **Toil**: Repetitive, manual work that doesn't add value but must be done to keep things running. Automating toil reduces effort and helps systems run more efficiently.
+
+---
+
+### **Patterns/Anti-patterns**
+
+1\. **Bulkhead pattern**: This technique isolates parts of a system, so if one part fails, it won't take down the others. It's like putting different sections of a ship into watertight compartments.
+
+2\. **Circuit breaker**: This pattern stops calls to a service when it's failing. It's like an electrical circuit breaker---when things go wrong, it "flips" to prevent further damage.
+
+3\. **Exponential backoff**: If a service fails, this approach waits increasingly longer periods before retrying. Instead of retrying immediately, the system waits 1 second, then 2 seconds, then 4 seconds, and so on.
+
+4\. **Jitter**: Adding random delays (jitter) to retry logic prevents systems from overwhelming each other with too many requests at once.
+
+5\. **Graceful degradation**: When something goes wrong, the system continues to work at reduced capacity instead of completely failing. For example, a website might show a simplified version when there's too much traffic.
+
+6\. **Load shedding**: This means selectively dropping or ignoring less important requests during high traffic to keep the system running.
+
+7\. **Retry amplification**: This happens when too many retries make a situation worse. For example, if a service fails, lots of retries can overload the system even more.
+
+8\. **Backpressure**: This refers to controlling the flow of data when a system is overwhelmed. It slows things down to prevent overloads.
+
+9\. **Rate limiting**: This controls how many requests a system allows over a certain period. For example, a service might limit each user to 100 requests per minute to avoid overloading.
+
+10\. **Request hedging**: Sending multiple requests to different servers to get a faster response. It's like sending an important message to multiple contacts to make sure someone answers quickly.
+
+---
+
+### **Practices**
+
+1\. **Chaos engineering**: This is the practice of intentionally causing failures to test how well a system can handle them. The goal is to make systems more resilient by learning from these controlled failures.
     
 ## Observability
  
