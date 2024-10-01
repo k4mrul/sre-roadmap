@@ -326,7 +326,7 @@ A cache is a temporary storage layer that keeps frequently accessed data closer 
 
 -   **SSTable**: Sorted String Table is a file format used for storing key-value pairs in a sorted order, used by databases like Cassandra
       
-Here's a breakdown of these concepts in simple terms:
+* * * * *
 
 ### **Reliability Concepts**
 
