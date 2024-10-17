@@ -359,23 +359,63 @@ An opinionated roadmap to become an SRE (Concepts > Tools)
 1\. **Chaos engineering**: This is the practice of intentionally causing failures to test how well a system can handle them. The goal is to make systems more resilient by learning from these controlled failures.
     
 ## Observability
- 
-* _Concepts_
-  * What's the difference between monitoring and observability
-  * Trace vs. metric vs. log
-  * Golden signals
-  * Observer effect
-  * Percentile
-  * Streetlight anti-method
-  * Time-series based monitoring lies
-  * USE method
-  * Main metrics for cache
-  * Why should we be careful about average performance metrics
-* _Alerting_
-  * Alerting strategy
-  * Alerting fatigue concept
-  * Characteristic of a good alert
-  * Slow vs. fast burn alert
+
+### **Monitoring vs. Observability**
+- **Monitoring** refers to tracking predefined metrics or system states. It helps detect when something goes wrong but may not explain why.
+- **Observability** is broader, focusing on understanding the internal state of systems through metrics, logs, and traces to diagnose complex issues.
+
+### **Trace vs. Metric vs. Log**
+- **Trace**: A record of requests as they travel through various services, giving insight into how different components interact.
+- **Metric**: Quantitative data (e.g., CPU usage, latency) that helps measure system performance.
+- **Log**: Text-based records of events or changes in the system, helpful for diagnosing specific incidents.
+
+### **Golden Signals**
+Four key metrics to monitor for system health:
+1. **Latency**: Time taken for requests to be processed.
+2. **Traffic**: The number of requests served.
+3. **Errors**: The rate of failed requests.
+4. **Saturation**: How full the system is (e.g., CPU or memory usage).
+
+### **Observer Effect**
+- The act of monitoring can affect the performance or behavior of the system itself, potentially skewing the data you are collecting.
+
+### **Percentile**
+- **Percentile** metrics (e.g., 90th or 95th percentile latency) are used to show how most users experience a system’s performance, which is often more insightful than averages.
+
+### **Streetlight Anti-Method**
+- The tendency to monitor only what’s easy to observe, leading to blind spots. It’s named after the “streetlight effect,” where someone looks for lost keys under a streetlight because that’s where it’s easiest to see, even if they might be elsewhere.
+
+### **Time-Series Based Monitoring Lies**
+- Relying only on averages in time-series data can hide spikes or anomalies. Observing patterns over time provides more accurate insights.
+
+### **USE Method**
+- A framework for monitoring system performance by checking for:
+  - **Utilization**: How much of a resource is being used.
+  - **Saturation**: How much demand exceeds the capacity.
+  - **Errors**: Failures or issues in the system.
+
+### **Main Metrics for Cache**
+- **Hit Rate**: The percentage of cache requests that result in a hit.
+- **Miss Rate**: The percentage of requests that require retrieving data from the source.
+- **Eviction Rate**: How often data is removed from the cache to make space for new data.
+- **Latency**: Time taken to retrieve data from the cache.
+
+### **Why Be Careful with Averages?**
+- **Average performance metrics** can be misleading, as they smooth out spikes and hide extremes. It’s better to look at percentiles to see how most users are impacted.
+
+### **Alerting**
+- **Alerting Strategy**: Define thresholds for critical conditions and set actionable, clear alerts to reduce noise.
+- **Alert Fatigue**: Over-alerting causes teams to ignore or delay response, reducing effectiveness.
+- **Characteristics of a Good Alert**:
+  - Actionable: Should prompt a necessary response.
+  - Clear: Indicate what’s wrong and the urgency.
+  - Relevant: Focus on actual, critical issues.
+  
+### **Slow vs. Fast Burn Alerts**
+- **Slow Burn Alerts**: Gradual issues that develop over time (e.g., resource leaks).
+- **Fast Burn Alerts**: Immediate issues that require urgent action (e.g., system crashes).
+
+This summary covers the key concepts, including various monitoring strategies, pitfalls, and methods to improve system observability and alerting practices.
      
 ## Rollout
  
