@@ -417,45 +417,75 @@ Four key metrics to monitor for system health:
 
 This summary covers the key concepts, including various monitoring strategies, pitfalls, and methods to improve system observability and alerting practices.
      
-## Rollout
- 
-* _Concepts_ 
-  * Bake time
-  * Feature flag
-  * Feature freeze
-  * Rollout supervision
-* _Rollout types_
-  * Blue green rollout
-  * Canary rollout
-  * Progressive rollout
-  * Shadow rollout
-  
-## SLI/SLO/SLA
+Here's a comprehensive, organized summary of the key points:
 
-* _Concepts_
-  * SLI vs. SLO vs. SLA
-  * Error budget
-* _SLO_
-  * Difference between KPIs and SLOs
-  * Benefits of having alerts based on SLOs
-  * Why is exceeding an SLO not necessarily a good thing
-  * SLO for data (freshness, completeness, consistency, etc.)
-  * SLO for mobiles
-  * SLO for services
-     
-## Container
+---
 
-* Container
-* Container orchestration
-   
-## Linux
+### Rollout Concepts
 
-* Scripting
-* Filesystem
-* Memory
-* Processes
-* Resource utilization
-* Network
+- **Bake Time**: The period a new feature is monitored after deployment to ensure stability and correct functionality.
+
+- **Feature Flag**: A toggle to enable or disable specific features without redeploying code, allowing gradual or controlled rollout.
+
+- **Feature Freeze**: A temporary halt on new feature development to focus on stabilizing and finalizing current versions for release.
+
+- **Rollout Supervision**: The process of monitoring the release for performance, user experience, and potential issues.
+
+### Rollout Types
+
+- **Blue-Green Rollout**: A deployment strategy where two identical environments (blue and green) are used. Traffic is routed to one environment while the other is prepared, allowing easy rollback if issues occur.
+
+- **Canary Rollout**: A small portion of users initially receives the update. If successful, it's gradually released to the rest of the users, reducing risk.
+
+- **Progressive Rollout**: Similar to a canary rollout but with controlled steps and monitoring to ensure each step performs as expected before proceeding.
+
+- **Shadow Rollout**: The new version is deployed alongside the current version, receiving production traffic but not affecting users, useful for testing in live conditions.
+
+---
+
+### SLI, SLO, and SLA
+
+- **SLI (Service Level Indicator)**: A quantitative measure of service performance (e.g., latency, uptime).
+
+- **SLO (Service Level Objective)**: The target or goal for a specific SLI; it defines acceptable performance thresholds.
+
+- **SLA (Service Level Agreement)**: A formal agreement between service providers and customers, with SLIs and SLOs as commitments, often legally binding.
+
+#### Concepts
+
+- **Error Budget**: The allowable margin within which SLOs can be missed, enabling teams to balance reliability with innovation.
+
+- **KPIs vs. SLOs**: KPIs are general performance indicators, while SLOs are specific targets related to service reliability.
+
+- **Benefits of SLO-Based Alerts**: Alerts based on SLOs focus on user experience, reducing noise and prioritizing impactful issues.
+
+- **Exceeding SLOs**: Overachieving on SLOs can imply underutilization of resources or an overly conservative budget, limiting innovation.
+
+- **SLOs for Data**: Key metrics include data freshness, completeness, and consistency, critical for data-dependent services.
+
+- **SLOs for Mobile and Services**: These may address aspects like app responsiveness, network reliability, and service uptime.
+
+---
+
+### Containers and Container Orchestration
+
+- **Containers**: Lightweight, isolated environments to run applications consistently across different infrastructures.
+
+- **Container Orchestration**: Automates the deployment, scaling, and management of containers across clusters, typically handled by platforms like Kubernetes.
+
+---
+
+### Linux and Scripting
+
+- **Filesystem**: Understanding the Linux filesystem is essential for managing files, permissions, and structures within a system.
+
+- **Memory and Processes**: Efficient management of memory and processes is critical for system performance, particularly for services running in containers.
+
+- **Resource Utilization**: Monitoring and optimizing resource usage helps maintain performance, especially under load.
+
+- **Network**: Managing and troubleshooting network configurations is vital in containerized and orchestrated environments to ensure connectivity and data flow.
+
+---
    
 ## Network
 
